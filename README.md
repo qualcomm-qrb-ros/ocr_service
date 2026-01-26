@@ -1,33 +1,47 @@
-# ocr_service User Guide
-Here comes the User Guide for OCR Service, it will contain some detail show as below.
 
-- the service definition and it's output and input.
-- how to install debian package & dependencies from Ubuntu PPA
-- how to run this project.
-- how to build this project.
+### 🚀 ocr_service User Guide
 
+Welcome to the **OCR Service User Guide**!  
+This document provides detailed instructions on how to install, configure, run, and build the OCR Service on your device.
 
-## Service
-### Client
+---
 
-| input                                 | output                                                        |
-| ------------------------------------- | ------------------------------------------------------------- |
-| Topic name : image topic name(String) | Topic name : OCR result (String) <br>OCR request status: Bool |
+### 📌 Overview
 
-### Server and Process Node：
+This guide covers:
 
-| Input                     | Output                 |
-| ------------------------- | ---------------------- |
-| Topic : sensor_msgs/Image | Topic : Std_msg/String |
+- Service definitions, inputs, and outputs  
+- Installing the Debian package & dependencies via Ubuntu PPA  
+- Running project executables  
+- Building the project from source  
 
-### Test Node:
+---
 
-| Input                     | Output                                              |
-| ------------------------- | --------------------------------------------------- |
-| String : image topic name <br> String : picture path |  Topic : sensor_msgs/Image |
-## Service msg
+### 🧩 Service Architecture
 
-### ocr_service::ocr_msg::OcrRequest
+#### 📥 Client
+
+| Input                                   | Output                                                         |
+| --------------------------------------- | -------------------------------------------------------------- |
+| Topic name: Image topic (String)        | Topic name: OCR result (String)<br>OCR request status: Bool    |
+
+#### 🖥️ Server & Process Node
+
+| Input                       | Output                 |
+| --------------------------- | ---------------------- |
+| Topic: `sensor_msgs/Image`  | Topic: `std_msgs/String` |
+
+#### 🧪 Test Node
+
+| Input                                                         | Output                      |
+| ------------------------------------------------------------- | --------------------------- |
+| String: image topic name <br> String: picture path            | Topic: `sensor_msgs/Image`  |
+
+---
+
+### 📨 Service Message
+
+#### `ocr_service::ocr_msg::OcrRequest`
 
 ```
 string image_topic_name
@@ -35,58 +49,75 @@ string image_topic_name
 string ocr_topic_name
 bool success
 ```
-## installation
-Add Qualcomm IOT PPA for Ubuntu
-```
+
+---
+
+### 🛠️ Installation
+
+#### Add Qualcomm IoT PPA for Ubuntu
+
+```bash
 sudo add-apt-repository ppa:ubuntu-qcom-iot/qcom-ppa
 sudo add-apt-repository ppa:ubuntu-qcom-iot/qirp
 sudo apt update
+```
 
+#### Install Debian Package
+
+```bash
+sudo apt install ros-jazzy-ocr-service
 ```
-Install Debian package
-```
-sudo apt install ros-jazzy-ocr-service 
-```
-Install python dependency
-```
+
+#### Install Python Dependencies
+
+```bash
 pip3 install pytesseract
 ```
 
-## Usage
-Run ocr_service and ocr_testnode on device:
+---
+
+### ▶️ Usage
 
 ```bash
-Terminal 1: launch ocr_server
+# Terminal 1: launch ocr_server
 export HOME=/home
 source /opt/ros/jazzy/setup.bash
 ros2 run ocr_service ocr_server
+```
 
-terminal 2: lanunch ocr_testnode
+```bash
+# Terminal 2: launch ocr_testnode
 export HOME=/home
 source /opt/ros/jazzy/setup.sh
 ros2 run ocr_service ocr_testnode --topic <image_topic> --picture <image_path>
+```
 
-terminal 3:launch ocr_client
+```bash
+# Terminal 3: launch ocr_client
 export HOME=/home
 source /opt/ros/jazzy/setup.sh
-ros2 run ocr_service ocr_client  <image_topic>
+ros2 run ocr_service ocr_client <image_topic>
 ```
 
-## Build from source
+---
 
-### Dependencies
-install dependencies:
-```
-apt install ros-jazzy-example-interfaces, ros-jazzy-ocr-msg, python3-setuptools
-```
-Build OCR_Service:
+### 🧱 Build From Source
+
+#### Dependencies
+
 ```bash
-
-git clone https://github.com/qualcomm-qrb-ros/ocr_service.git
-colcon build 
-
+apt install ros-jazzy-example-interfaces ros-jazzy-ocr-msg python3-setuptools
 ```
 
-## License
+#### Build OCR_Service
 
-This is licensed under the BSD 3-Clause-Clear “New” or “Revised” License.
+```bash
+git clone https://github.com/qualcomm-qrb-ros/ocr_service.git
+colcon build
+```
+
+---
+
+### 📄 License
+
+This project is licensed under the **BSD 3-Clause-Clear (“New” or “Revised”) License**.
